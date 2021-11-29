@@ -1,9 +1,11 @@
 # NotePad
 # 简介
-实现了NotePad的基础功能时间戳和搜索
+实现了NotePad的基础功能时间戳和搜索，扩展了UI美化 
 # 基本要求
 1.NoteList中显示条目增加时间戳显示   
 2.添加笔记查询功能（根据标题查询）
+# 扩展要求 
+1.UI美化 
   
 # 代码详解  
 ## 时间戳功能
@@ -196,7 +198,27 @@ public class NoteSearch extends Activity implements SearchView.OnQueryTextListen
 ### 5.最后要在清单文件AndroidManifest.xml里面注册NoteSearch,否则无法实现界面的跳转 
 ```
 <activity android:name=".NoteSearch" android:label="@string/menu_search" />
-``` 
+```  
+## UI美化
+### 1.先给NoteList换个主题，把黑色换成白色，在AndroidManifest.xml中NotesList的Activity中添加： 
+```
+android:theme="@android:style/Theme.Holo.Light"
+```
+### 2.创建数据库表地方添加颜色的字段： 
+```
+ @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE " + NotePad.Notes.TABLE_NAME + "   ("
+        + NotePad.Notes._ID + " INTEGER PRIMARY KEY,"
+        + NotePad.Notes.COLUMN_NAME_TITLE + " TEXT,"
+        + NotePad.Notes.COLUMN_NAME_NOTE + " TEXT,"
+        + NotePad.Notes.COLUMN_NAME_CREATE_DATE + " INTEGER,"
+        + NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE + " INTEGER,"
+        + NotePad.Notes.COLUMN_NAME_BACK_COLOR + " INTEGER" //颜色
+        + ");");
+       }
+  ``` 
+
 # 功能展示
 1.打开APP，进入主菜单界面  
 ![image](https://user-images.githubusercontent.com/90608402/143822139-a735f973-30f7-45fd-b4ad-d91b1499e6b3.png)  
